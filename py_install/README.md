@@ -1,8 +1,8 @@
 
-# Python 相关库修改记录
+# Python 관련 라이브러리 수정 기록
 
 
-## 安装教程
+## 설치 튜토리얼
 
 cd py_install
 
