@@ -42,6 +42,10 @@ void setup() {
   ch8.attach(9);
   ch9.attach(10);
   ch10.attach(11);
+
+  pinMode(12, OUTPUT); // 12번 핀을 출력으로 설정
+  pinMode(11, OUTPUT); // 11번 핀을 출력으로 설정
+  pinMode(13, OUTPUT); // 13번 핀을 출력으로 설정
 }
 
 void loop() {
@@ -133,6 +137,21 @@ void readRx() {
       // Check if channel 6 (switch B) is in the shutdown position
       if (rcValue[5] >= 1900) {
         Serial.println("SHUTDOWN"); // 젯슨 나노에 셧다운 명령 전송
+      }
+
+      // 추가된 코드: ch5의 pwm 값에 따라 다이오드 제어
+      if (rcValue[4] >= 1900) {
+        digitalWrite(12, HIGH); // 12번 핀 ON
+        digitalWrite(11, LOW);  // 11번 핀 OFF
+        digitalWrite(13, LOW);  // 13번 핀 OFF
+      } else if (rcValue[4] >= 1300 && rcValue[4] <= 1700) {
+        digitalWrite(12, LOW);  // 12번 핀 OFF
+        digitalWrite(11, HIGH); // 11번 핀 ON
+        digitalWrite(13, LOW);  // 13번 핀 OFF
+      } else if (rcValue[4] <= 1100) {
+        digitalWrite(12, LOW);  // 12번 핀 OFF
+        digitalWrite(11, LOW);  // 11번 핀 OFF
+        digitalWrite(13, HIGH); // 13번 핀 ON
       }
 
       rxFrameDone = true;
